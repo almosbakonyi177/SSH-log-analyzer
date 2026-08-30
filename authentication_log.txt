@@ -44,3 +44,8 @@ Aug 14 02:00:10 myserver sshd[1042]: Failed password for root from 103.15.22.4 p
 Aug 14 02:00:15 myserver sshd[1043]: Failed password for root from 103.15.22.4 port 50004 ssh2
 Aug 14 02:00:20 myserver sshd[1044]: Failed password for root from 103.15.22.4 port 50005 ssh2
 Aug 14 09:15:00 myserver sshd[1045]: Failed password for user1 from 192.168.1.50 port 50010 ssh2
+Sep 14 09:15:00 myserver sshd[1046]: Failed password for user1 from 192.168.1.50 port 50010 ssh2
+Sep 14 09:16:00 myserver sshd[1047]: Failed password for user1 from 192.168.1.50 port 50010 ssh2
+Sep 14 09:16:10 myserver sshd[1048]: Failed password for user1 from 192.168.1.50 port 50010 ssh2
+Sep 14 09:17:00 myserver sshd[1049]: Failed password for user1 from 192.168.1.50 port 50010 ssh2
+Sep 14 09:17:10 myserver sshd[1050]: Failed password for user1 from 192.168.1.50 port 50016 ssh2

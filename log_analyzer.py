@@ -53,31 +53,31 @@ def mainTask():
 
         if x:
             failed_IP=re.search(r'from (\d+\.\d+\.\d+\.\d+)', line).group(1)
-            day=parts[1]
+            date=parts[0]+" "+parts[1]
 
             # Track the failed login attempts
             # Day->IP->List of timestamps
-            failed_IPs[day]=failed_IPs.get(day, {})
-            failed_IPs[day][failed_IP]=failed_IPs[day].get(failed_IP,[])
-            failed_IPs[day][failed_IP].append(timeStamp)
+            failed_IPs[date]=failed_IPs.get(date, {})
+            failed_IPs[date][failed_IP]=failed_IPs[date].get(failed_IP,[])
+            failed_IPs[date][failed_IP].append(timeStamp)
 
     # Set because we don't want duplicates
     suspicious=set()
 
     # Go through on each day's failed IPs
-    for day, IP_data in failed_IPs.items():
+    for date, IP_data in failed_IPs.items():
         # Go through on each IP's timestamps
         for IP_addess, timeStamps in IP_data.items():
         
             if checkBruteForce(timeStamps):
                 # If there was too many tries in 1 hour it is suspicious(brute force)
-                suspicious.add(day+"\t: "+IP_addess+" (Brute force)")
+                suspicious.add(date+"\t: "+IP_addess+" (Brute force)")
 
         # Calculate the 95th percentile of failed login attempts for the day
         percentile=numpy.percentile(list(len(attempts) for attempts in IP_data.values()), 95)
         for IP_addess, attempts in IP_data.items():
             if len(attempts)>percentile:
-                suspicious.add(day+"\t: "+IP_addess+" (Above 95th percentile)")
+                suspicious.add(date+"\t: "+IP_addess+" (Above 95th percentile)")
 
     file.close()
     suspicious=sorted(suspicious)
