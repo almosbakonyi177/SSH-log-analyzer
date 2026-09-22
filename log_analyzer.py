@@ -52,11 +52,16 @@ def mainTask():
         x = re.search('Failed password', line)
 
         if x:
-            failed_IP=re.search(r'from (\d+\.\d+\.\d+\.\d+)', line).group(1)
+            failed_IP=re.search(r'from\s+([0-9a-fA-F:\.]+)', line)
+
+            if failed_IP is None:
+                continue
+            failed_IP=failed_IP.group(1)
+
             date=parts[0]+" "+parts[1]
 
             # Track the failed login attempts
-            # Day->IP->List of timestamps
+            # Date->IP->List of timestamps
             failed_IPs[date]=failed_IPs.get(date, {})
             failed_IPs[date][failed_IP]=failed_IPs[date].get(failed_IP,[])
             failed_IPs[date][failed_IP].append(timeStamp)
@@ -64,7 +69,7 @@ def mainTask():
     # Set because we don't want duplicates
     suspicious=set()
 
-    # Go through on each day's failed IPs
+    # Go through on each date's failed IPs
     for date, IP_data in failed_IPs.items():
         # Go through on each IP's timestamps
         for IP_addess, timeStamps in IP_data.items():
@@ -86,7 +91,7 @@ def mainTask():
 
 window=tk.Tk()
 window.geometry("750x750")
-window.title('Mask')
+window.title('SSH Log Analyzer')
 
 baseSettingsBar=tk.Frame(window)
 
